@@ -21,33 +21,42 @@ var cards = [
     cardImage: "images/king-of-diamonds.png"
   }
 ];
+
 var cardsInPlay = [];
 
 var checkForMatch = function() {
-  if(cardsInPlay[0] === cardsInPlay[1]) {
-    console.log("You've found a match!");
+  if(cardsInPlay.length === 2){
+    if (cardsInPlay[0].rank === cardsInPlay[1].rank){
+       //console.log("You've found a match!");
+       alert("You are a match!");
+       cardsInPlay = [];
+    }
+    else{
+      //console.log("Sorry, Charlie, try again - no match or not 2 cards!");
+      alert("Wrong!  You blew it");
+    }
   }
-  else{
-    console.log("Sorry, Charlie, try again");
-  }
-};
+ }
 
-var flipCard = function() {
-this.getAttribute("cardId","data-id");
-cardsInPlay.push(cards[cardId].rank);
-console.log("User flipped " + cards[cardId].rank);
-console.log(cards[cardId].cardImage);
-console.log(cards[cardId].suit);
-checkForMatch();
-};
+ var flipCard = function() {
 
-var createBoard = function(){
-  for (var i =0; i < cards.length; i++)
-  var cardElement = document.createElement('img');
-  cardElement.setAttribute('src','images/back.png');
-  cardElement.setAttribute('data-id',i);
-  document.getElementsByTagName('cardsInPlay').addEventListener('click',flipcard);
-  document.getElementsById('game-board').appendChild(cardElement);
+           var cardId = this.getAttribute('data-id', cardsInPlay);
+           cardsInPlay.push(cards[cardId]);
+           console.log("User flipped " + cards[cardId].rank + " of " + cards[cardId].suit);
+           checkForMatch();
+           this.setAttribute('src',cards[cardId].cardImage);
+           console.log(cards[cardId].cardImage);
+
+    }
+
+var createBoard = function() {
+    for (var i = 0; i < cards.length; i++) {
+      var cardElement = document.createElement('img');
+      cardElement.setAttribute('src','images/back.png');
+      cardElement.setAttribute('data-id', i);
+      cardElement.addEventListener("click", flipCard);
+      document.getElementById('game-board').appendChild(cardElement);
+   }
 }
 
-createboard();
+createBoard();
